@@ -12,9 +12,9 @@ function main () {
 
   const data = fs
     .readFileSync(filePath, { encoding: 'utf8' })
-    .split('/n')
+    .split('\n')
     .map(calcFunction)
-    .join('/n')
+    .join('\n')
 
   process.stdout.write(data)
 }

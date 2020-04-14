@@ -19,5 +19,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.3.0"
+  },
+  "dependencies": {
+    "ramda": "^0.27.0",
+    "worker-threads-pool": "^2.0.0"
   }
 }

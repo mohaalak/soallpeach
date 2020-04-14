@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { exec } = require('child_process')
 const assert = require('assert')
 const R = require('ramda')
 const isPrime = require('./isPrime')
@@ -16,9 +17,11 @@ function main () {
 
   assert(filePath, 'you sould provide a file')
 
+  console.time('profile')
   const data = fs.readFileSync(filePath, { encoding: 'utf8' })
   const result = start(data)
-  console.log(result)
-}
 
+  process._rawDebug(result)
+  console.timeEnd('profile')
+}
 main()

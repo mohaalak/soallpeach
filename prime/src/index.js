@@ -1,18 +1,15 @@
-const async = require('./lib/workerPool')
 const fs = require('fs')
 const assert = require('assert')
-const os = require('os')
 const R = require('ramda')
+const isPrime = require('./isPrime')
+const { memoize1 } = require('./lib/utility')
 
-const threadCounts = os.cpus().length
-const calcFunction = async(threadCounts)
-const promiseAll = arr => Promise.all(arr)
-const then = f => p => p.then(f)
-const lines = arr => arr.map(x => x.join('\n')).join('\n')
-const unlines = x => x.split('\n')
-const partition = arr => R.splitEvery(arr.length / threadCounts, arr)
+const calcFunction = memoize1(isPrime)
 
-const start = R.pipe(unlines, partition, R.map(calcFunction), promiseAll, then(lines))
+const lines = R.join('\n')
+const unlines = R.split('\n')
+
+const start = R.pipe(unlines, R.map(calcFunction), lines)
 
 function main () {
   const filePath = process.argv[2]
@@ -20,7 +17,8 @@ function main () {
   assert(filePath, 'you sould provide a file')
 
   const data = fs.readFileSync(filePath, { encoding: 'utf8' })
-  start(data).then(console.log)
+  const result = start(data)
+  console.log(result)
 }
 
 main()

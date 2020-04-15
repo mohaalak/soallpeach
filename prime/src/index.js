@@ -8,6 +8,7 @@ const calcFunction = memoize1(isPrime)
 function main () {
   const filePath = process.argv[2]
 
+  const outputPath = process.argv[3]
   assert(filePath, 'you sould provide a file')
 
   const data = fs
@@ -16,6 +17,10 @@ function main () {
     .map(calcFunction)
     .join('\n')
 
-  process.stdout.write(data)
+  if (outputPath) {
+    fs.writeFileSync(outputPath, data)
+  } else {
+    process.stdout.write(data)
+  }
 }
 main()

@@ -11,16 +11,16 @@ function main () {
   assert(filePath, 'you sould provide a file')
 
   const filePromise = promiseReadfile(filePath, { encoding: 'utf8' })
-  const primeNumbers = createPrimes(50000)
+  const { list, obj } = createPrimes(50000)
   filePromise
     .then(data => {
-      const calcFunction = memoize1(primeNumbers, isPrime)
+      const calcFunction = memoize1(obj, isPrime(list))
 
       return data
         .split('\n')
         .map(calcFunction)
         .join('\n')
     })
-    .then(console.log)
+    .then(d => process.stdout.write(d))
 }
 main()

@@ -15,7 +15,7 @@ function isPrime (list) {
 
     const squareRoot = square(value)
     let prime = 3
-    let index = 2
+    let index = 1
     while (prime < squareRoot) {
       if (value % prime === 0) {
         return '0'

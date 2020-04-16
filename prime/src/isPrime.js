@@ -20,4 +20,21 @@ function isPrime (s) {
 
   return '1'
 }
-module.exports = isPrime
+function createPrimes (n) {
+  const mark = []
+  mark[0] = true
+  mark[1] = true
+  const primes = {}
+  for (let i = 2; i < n; i++) {
+    if (mark[i]) {
+      continue
+    }
+    for (let j = i * 2; j < n; j += i) {
+      mark[j] = true
+    }
+    primes[i + ''] = '1'
+  }
+  return primes
+}
+
+module.exports = { isPrime, createPrimes }

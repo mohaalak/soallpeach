@@ -2,25 +2,27 @@ const fs = require('fs')
 const assert = require('assert')
 const isPrime = require('./isPrime')
 const { memoize1 } = require('./lib/utility')
+const util = require('util')
+const generatePrimeNumbers = require('./primeNumbers')
 
-const calcFunction = memoize1(isPrime)
+const promiseReadfile = util.promisify(fs.readFile)
 
 function main () {
   const filePath = process.argv[2]
 
-  const outputPath = process.argv[3]
   assert(filePath, 'you sould provide a file')
 
-  const data = fs
-    .readFileSync(filePath, { encoding: 'utf8' })
-    .split('\n')
-    .map(calcFunction)
-    .join('\n')
+  const filePromise = promiseReadfile(filePath, { encoding: 'utf8' })
+  const primesPromise = generatePrimeNumbers(1000000)
+  Promise.all([filePromise, primesPromise])
+    .then(([data, primeNumbers]) => {
+      const calcFunction = memoize1(primeNumbers, isPrime)
 
-  if (outputPath) {
-    fs.writeFileSync(outputPath, data)
-  } else {
-    process.stdout.write(data)
-  }
+      return data
+        .split('\n')
+        .map(calcFunction)
+        .join('\n')
+    })
+    .then(console.log)
 }
 main()

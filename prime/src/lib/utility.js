@@ -1,6 +1,4 @@
-function memoize1 (f) {
-  const cache = {}
-
+function memoize1 (cache, f) {
   return function (x) {
     if (cache[x]) {
       return cache[x]

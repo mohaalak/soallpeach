@@ -1,0 +1,27 @@
+{
+  "name": "countme",
+  "version": "1.0.0",
+  "description": "SoallPeach CountMe",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohaalak/soallpeach.git"
+  },
+  "author": "Mohammad Hadi Aliakbar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohaalak/soallpeach/issues"
+  },
+  "homepage": "https://github.com/mohaalak/soallpeach#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "express": "^4.17.1",
+    "mocha": "^7.1.2",
+    "raw-body": "^2.4.1",
+    "supertest": "^4.0.2"
+  }
+}

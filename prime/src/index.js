@@ -11,7 +11,7 @@ function main () {
   assert(filePath, 'you sould provide a file')
 
   const filePromise = promiseReadfile(filePath, { encoding: 'utf8' })
-  const { list, obj } = createPrimes(50000)
+  const { list, obj } = createPrimes(10000)
   filePromise
     .then(data => {
       const calcFunction = memoize1(obj, isPrime(list))

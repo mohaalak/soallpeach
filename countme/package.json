@@ -17,11 +17,9 @@
     "url": "https://github.com/mohaalak/soallpeach/issues"
   },
   "homepage": "https://github.com/mohaalak/soallpeach#readme",
-  "dependencies": {
+  "devDependencies": {
     "chai": "^4.2.0",
-    "express": "^4.17.1",
     "mocha": "^7.1.2",
-    "raw-body": "^2.4.1",
     "supertest": "^4.0.2"
   }
 }

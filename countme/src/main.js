@@ -1,28 +1,29 @@
-const express = require("express");
-const getRawBody = require("raw-body");
-const app = express();
+const http = require("http");
 
-let sum = 0;
-app.post("/", (req, res) => {
-  getRawBody(
-    req,
-    { limit: "1mb", length: req.headers["content-length"] },
-    (err, string) => {
-      if (err) {
-        return res.sendStatus(400);
-      }
+const array = [];
+const getRawBody = (request) =>
+  new Promise((resolve) => {
+    let body = [];
+    request
+      .on("data", (chunk) => {
+        body.push(chunk);
+      })
+      .on("end", () => {
+        body = Buffer.concat(body).toString();
+        resolve(body);
+      });
+  });
 
-      const number = parseInt(string, 10);
-      if (isNaN(number)) {
-        return res.sendStatus(400);
-      }
-
-      sum += number;
-
-      res.sendStatus(200);
-    }
-  );
+const server = http.createServer(function(req, res) {
+  if (req.method === "GET") {
+    const result = array.reduce((x, y) => x + parseInt(y), 0);
+    res.end(result + "");
+  } else {
+    getRawBody(req)
+      .then((string) => array.push(string))
+      .catch((err) => console.log(err));
+    res.end("ok\n");
+  }
 });
 
-app.get("/count", (_req, res) => res.status(200).send(`${sum}`));
-module.exports = { app };
+module.exports = { app: server };

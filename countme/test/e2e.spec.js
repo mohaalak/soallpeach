@@ -6,11 +6,6 @@ describe("Count Me Testing", () => {
       .get("/count")
       .expect(200, "0", done);
   });
-  it("should return 400 status for post without number", (done) => {
-    supertest(app)
-      .post("/")
-      .expect(400, done);
-  });
 
   it("should return sum of all requrest", async () => {
     await supertest(app)
